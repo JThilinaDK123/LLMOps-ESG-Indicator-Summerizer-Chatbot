@@ -2,13 +2,13 @@ from pypdf import PdfReader
 
 try:
     reader = PdfReader("./data/data.pdf")
-    ESG_Indicators = ""
+    healthproct = ""
     for page in reader.pages:
         text = page.extract_text()
         if text:
-            ESG_Indicators += text
+            healthproct += text
 except FileNotFoundError:
-    ESG_Indicators = "Data not available"
+    healthproct = "Data not available"
 
 # # Read other data files
 # with open("./data/summary.txt", "r", encoding="utf-8") as f:

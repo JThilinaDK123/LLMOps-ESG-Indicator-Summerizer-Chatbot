@@ -94,7 +94,7 @@ export default function AIBot() {
             <div className="bg-gradient-to-r from-teal-600 to-emerald-600 text-white p-5 flex items-center justify-between rounded-t-2xl shadow-md">
                 <div className="flex items-center gap-3">
                     <Bot className="w-7 h-7" />
-                    <h2 className="text-2xl font-semibold tracking-tight">ESG Intelligence Assistant</h2>
+                    <h2 className="text-2xl font-semibold tracking-tight">MedExtract AI Intelligence Assistant</h2>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-teal-100">
                     {isConnected ? (
@@ -117,7 +117,7 @@ export default function AIBot() {
                     <div className="text-center text-gray-500 mt-20">
                         <Sparkles className="w-14 h-14 mx-auto mb-4 text-teal-400" />
                         <p className="text-lg font-semibold">Hello there 👋</p>
-                        <p className="text-gray-600 mt-1">Ask me anything about ESG metrics, indicators, or reporting.</p>
+                        <p className="text-gray-600 mt-1">Ask me anything about cancer — from types, symptoms, and treatments to risk factors, prevention, and recent research findings</p>
                     </div>
                 )}
 
@@ -199,7 +199,7 @@ export default function AIBot() {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        placeholder="Ask about ESG indicators, frameworks, or disclosures..."
+                        placeholder="........"
                         className="flex-1 px-5 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-300 text-gray-800 transition-all"
                         disabled={isLoading}
                     />

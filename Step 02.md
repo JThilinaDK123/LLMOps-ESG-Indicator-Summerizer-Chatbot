@@ -1,4 +1,4 @@
-# Deploy ESG Indicator Chatbot API to AWS
+# Deploy MedExtract API to AWS
 
 - **AWS S3 Buckets** for store memory and the frontend application
 - **AWS Lambda** for serverless backend deployment
@@ -153,7 +153,7 @@ def to_lc_messages(conversation: List[Dict], system_prompt: str) -> List:
 @app.get("/")
 async def root():
     return {
-        "message": "ESG Indicator Chatbot API is running.",
+        "message": "MedExtract is running.",
         "memory_enabled": True,
         "storage": "S3" if USE_S3 else "local",
         "model_backend": "Groq/LangChain",
@@ -262,7 +262,7 @@ Create a `.env` file in the root directory:
 ```bash
 AWS_ACCOUNT_ID=aws_account_id    # actual AWS account ID with 12 digits
 DEFAULT_AWS_REGION=region
-PROJECT_NAME=ESGIndicatorChatbot
+PROJECT_NAME=MedExtract
 GROQ_API_KEY=your_groq_key
 MEMORY_DIR=../memory
 ```
@@ -288,7 +288,7 @@ MEMORY_DIR=../memory
 
 1. In AWS Console, search for **IAM**
 2. Click **User groups** → **Create group**
-3. Group name: `ESGIndicatorChatbot`
+3. Group name: `MedExtract`
 4. Attach the following policies
    - `AWSLambda_FullAccess` - For Lambda operations
    - `AmazonS3FullAccess` - For S3 bucket operations
@@ -302,7 +302,7 @@ MEMORY_DIR=../memory
 
 1. In IAM, click **Users** → Select `thilina-aiengineer`
 2. Click **Add to groups**
-3. Select `ESGIndicatorChatbot`
+3. Select `MedExtract`
 4. Click **Add to groups**
 
 ### Step 6: Sign In as IAM User
@@ -414,7 +414,7 @@ uv run deploy.py
 2. Click **Create function**
 3. Choose **Author from scratch**
 4. Configuration:
-   - Function name: `ESGIndicatorChatbot-api`
+   - Function name: `MedExtract-api`
    - Runtime: **Python 3.12**
    - Architecture: **x86_64**
 5. Click **Create function**
@@ -444,7 +444,7 @@ This will show some error at the first stage. Below step will sort out that issu
    - `OPENAI_API_KEY` = your_openai_api_key
    - `CORS_ORIGINS` = `*` (this will updated in next steps)
    - `USE_S3` = `true`
-   - `S3_BUCKET` = `ESGIndicatorChatbot-memory` (S3 bucket will create in next step. update this with that bucket name)
+   - `S3_BUCKET` = `MedExtract-memory` (S3 bucket will create in next step. update this with that bucket name)
 4. Click **Save**
 
 ### Step 5: Increase Timeout
@@ -496,7 +496,7 @@ This will show some error at the first stage. Below step will sort out that issu
 1. In AWS Console, search for **S3**
 2. Click **Create bucket**
 3. Configuration:
-   - Bucket name: `ESGIndicatorChatbot-memory` (must be a unique namespace)
+   - Bucket name: `MedExtract-memory` (must be a unique namespace)
    - Region: Same as the Lambda function stays(e.g., us-east-1)
    - Leave all other settings as default
 4. Click **Create bucket**
@@ -505,7 +505,7 @@ This will show some error at the first stage. Below step will sort out that issu
 ### Step 2: Update Lambda Environment
 
 1. Go back to Lambda → **Configuration** → **Environment variables**
-2. Update `S3_BUCKET` with the actual bucket name (`ESGIndicatorChatbot-memory`)
+2. Update `S3_BUCKET` with the actual bucket name (`MedExtract-memory`)
 3. Click **Save**
 
 ### Step 3: Add S3 Permissions to Lambda
@@ -520,7 +520,7 @@ This will show some error at the first stage. Below step will sort out that issu
 
 1. Back in S3, click **Create bucket**
 2. Configuration:
-   - Bucket name: `ESGIndicatorChatbot-frontend`
+   - Bucket name: `MedExtract-frontend`
    - Region: Same as Lambda
    - **Uncheck** "Block all public access"
    - Check the acknowledgment box
@@ -571,8 +571,8 @@ This will show some error at the first stage. Below step will sort out that issu
 4. **Step 1 - Create and configure integrations:**
    - Click **Add integration**
    - Integration type: **Lambda**
-   - Lambda function: Select `ESGIndicatorChatbot-api` from the dropdown
-   - API name: `ESGIndicatorChatbot-api-gateway`
+   - Lambda function: Select `MedExtract-api` from the dropdown
+   - API name: `MedExtract-api-gateway`
    - Click **Next**
 
 ### Step 2: Configure Routes
@@ -583,29 +583,29 @@ This will show some error at the first stage. Below step will sort out that issu
 **Existing route (update it):**
 - Method: `ANY`
 - Resource path: `/{proxy+}`
-- Integration target: `ESGIndicatorChatbot-api`
+- Integration target: `MedExtract-api`
 
 **Add these additional routes (click Add route for each):**
 
 Route 1:
 - Method: `GET`
 - Resource path: `/`
-- Integration target: `ESGIndicatorChatbot-api`
+- Integration target: `MedExtract-api`
 
 Route 2:
 - Method: `GET`
 - Resource path: `/health`
-- Integration target: `ESGIndicatorChatbot-api`
+- Integration target: `MedExtract-api`
 
 Route 3:
 - Method: `POST`
 - Resource path: `/chat`
-- Integration target: `ESGIndicatorChatbot-api`
+- Integration target: `MedExtract-api`
 
 Route 4 (for CORS):
 - Method: `OPTIONS`
 - Resource path: `/{proxy+}`
-- Integration target: `ESGIndicatorChatbot-api`
+- Integration target: `MedExtract-api`
 
 3. Click **Next**
 
@@ -704,7 +704,7 @@ aws s3 sync out/ s3://YOUR-FRONTEND-BUCKET-NAME/ --delete
 
 1. Go to the S3 frontend bucket → **Properties** → **Static website hosting**
 2. Click the **Bucket website endpoint** URL
-3. The ESGIndicatorChatbot app should load
+3. The MedExtract app should load
 
 ## Part 8: Set Up CloudFront
 
@@ -713,7 +713,7 @@ aws s3 sync out/ s3://YOUR-FRONTEND-BUCKET-NAME/ --delete
 1. Go to S3 → the frontend bucket
 2. Click **Properties** tab
 3. Scroll to **Static website hosting**
-4. Copy the **Bucket website endpoint** (looks like: `http://ESGIndicatorChatbot-frontend-xxx.s3-website-us-east-1.amazonaws.com`)
+4. Copy the **Bucket website endpoint** (looks like: `http://MedExtract-frontend-xxx.s3-website-us-east-1.amazonaws.com`)
 5. Save this URL - This will need it for CloudFront
 
 ### Step 2: Create CloudFront Distribution
@@ -721,12 +721,12 @@ aws s3 sync out/ s3://YOUR-FRONTEND-BUCKET-NAME/ --delete
 1. In AWS Console, search for **CloudFront**
 2. Click **Create distribution**
 3. **Step 1 - Origin:**
-   - Distribution name: `ESGIndicatorChatbot-distribution`
+   - Distribution name: `MedExtract-distribution`
    - Click **Next**
 4. **Step 2 - Add origin:**
    - Choose origin: Select **Other** (not Amazon S3!)
    - Origin domain name: Paste the S3 website endpoint WITHOUT the http://
-     - Example: `ESGIndicatorChatbot-frontend-xxx.s3-website-us-east-1.amazonaws.com`
+     - Example: `MedExtract-frontend-xxx.s3-website-us-east-1.amazonaws.com`
    - **Origin protocol policy**: Select **HTTP only** (not HTTPS!)
      - This is because S3 static website hosting doesn't support HTTPS
      - If select HTTPS, it will get 504 Gateway Timeout errors
@@ -779,10 +779,10 @@ This allows Lambda function to accept requests only from the CloudFront distribu
 
 ## Part 9: Testing
 
-### Step 1: Access the ESGIndicatorChatbot
+### Step 1: Access the MedExtract
 
 1. Go to the CloudFront URL: `https://YOUR-DISTRIBUTION.cloudfront.net`
-2. The ESGIndicatorChatbot should load with HTTPS.
+2. The MedExtract should load with HTTPS.
 
 ### Step 2: Verify Memory in S3
 
@@ -792,7 +792,7 @@ This allows Lambda function to accept requests only from the CloudFront distribu
 ### Step 3: Monitor CloudWatch Logs
 
 1. Go to CloudWatch → **Log groups**
-2. Find `/aws/lambda/ESGIndicatorChatbot-api`
+2. Find `/aws/lambda/MedExtract-api`
 3. View recent logs to debug any issues
 
 

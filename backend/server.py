@@ -123,7 +123,7 @@ def to_lc_messages(conversation: List[Dict], system_prompt: str) -> List:
 @app.get("/")
 async def root():
     return {
-        "message": "ESG Indicator Chatbot API is running.",
+        "message": "Healthproct API is running.",
         "memory_enabled": True,
         "storage": "S3" if USE_S3 else "local",
         "model_backend": "Groq/LangChain",
