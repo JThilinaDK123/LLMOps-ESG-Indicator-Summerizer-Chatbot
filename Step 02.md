@@ -20,7 +20,6 @@ Ensure all necessary dependencies, including AWS SDK (`boto3`) and the serverles
 ```
 fastapi
 uvicorn
-openai
 python-dotenv
 python-multipart
 boto3
