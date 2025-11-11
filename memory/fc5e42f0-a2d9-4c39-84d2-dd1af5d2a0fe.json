@@ -1,0 +1,22 @@
+[
+  {
+    "role": "user",
+    "content": "Hi there, its me brian",
+    "timestamp": "2025-11-08T15:39:07.076024"
+  },
+  {
+    "role": "assistant",
+    "content": "Hi Brian. I'm here to assist you with summarizing and extracting insights from cancer-related PDF documents. What kind of information are you looking for regarding cancer? Would you like me to summarize a specific section or the entire document?",
+    "timestamp": "2025-11-08T15:39:07.076024"
+  },
+  {
+    "role": "user",
+    "content": "what's my name is",
+    "timestamp": "2025-11-08T15:39:19.734687"
+  },
+  {
+    "role": "assistant",
+    "content": "Brian mentioned your name earlier.",
+    "timestamp": "2025-11-08T15:39:19.734687"
+  }
+]
